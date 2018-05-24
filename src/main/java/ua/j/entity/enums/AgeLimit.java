@@ -5,10 +5,10 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum UserRole {
+public enum AgeLimit {
 
-	ROLE_ADMIN("ADMIN"), ROLE_USER("USER"), ROLE_MODERATOR("MODERATOR");
+	LIMIT_1("3+"), LIMIT_2("12+"), LIMIT_3("16+"), LIMIT_4("18+");
 	
-	private String role;
+	private String limit;
 	
 }
