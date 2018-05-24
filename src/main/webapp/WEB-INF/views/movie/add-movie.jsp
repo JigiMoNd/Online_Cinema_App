@@ -6,10 +6,10 @@
 
 <form:form action="add-movie" method="POST" modelAttribute="movieModel">
 	
-	<form:input path="name"/> <br>
-	<form:input path="description"/> <br>
-	<form:input path="length"/>(minutes) <br>
-	<form:input path="imageURL"/> <br>
+	Title: <form:input path="name"/> <br>
+	Description: <form:input path="description"/> <br>
+	Length (minutes):<form:input path="length"/> <br>
+	ImageURL<form:input path="imageURL"/> <br>
 	
 	<input type="submit" value="Add movie">
 

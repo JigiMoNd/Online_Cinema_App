@@ -8,28 +8,31 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ua.j.entity.Movie;
-import ua.j.service.MovieService;
+import ua.j.entity.Actor;
+import ua.j.service.ActorService;
 
 @Controller
-@RequestMapping("/movie")
-public class MovieController {
+@RequestMapping("/actor")
+public class ActorController {
 
-	@Autowired
-	private MovieService movieService;
 	
-	@GetMapping("/add-movie")
-	public String ShowAddMovie(Model model) {
-		model.addAttribute("movieModel", new Movie());
+	@Autowired
+	private ActorService actorService;
+	
+	@GetMapping("/add-actor")
+	public String ShowAddActor(Model model) {
+		model.addAttribute("actorModel", new Actor());
 		
-		return "movie/add-movie";
+		return "actor/add-actor";
 	}
 	
-	@PostMapping("/add-movie")
-	public String saveMovie(@ModelAttribute("movieModel") Movie movie) {
-		movieService.saveMovie(movie);
+	@PostMapping("/add-actor")
+	public String saveActor(@ModelAttribute("movieActor") Actor actor) {
+		actorService.saveActor(actor);
 		
 		return "redirect:/";
 	}
-		
+	
+	
+	
 }
