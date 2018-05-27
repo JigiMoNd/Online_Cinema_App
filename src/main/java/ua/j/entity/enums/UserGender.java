@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public enum UserGender {
 
-	ROLE_MALE("MALE"), ROLE_FEMALE("FEMALE");
+	ROLE_MALE("Male"), ROLE_FEMALE("Female");
 	
 	private String gender;
 	

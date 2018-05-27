@@ -24,8 +24,9 @@ import lombok.Setter;
 @Getter @Setter
 public class Actor extends BaseEntity {
 	
-	private String name;
-	
+	@Column(name = "full_name")
+	private String fullName;
+		
 	@ManyToOne
 	@JoinColumn(name = "country_id")
 	private Country country;

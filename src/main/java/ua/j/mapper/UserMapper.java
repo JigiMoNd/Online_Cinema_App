@@ -10,7 +10,7 @@ public interface UserMapper {
 
 	public static User toSecurityUser(ua.j.entity.User user) {
 		return new User(
-				user.getEmail(), 
+				user.getId().toString(), 
 				user.getPassword(), 
 				AuthorityUtils.createAuthorityList(String.valueOf(user.getRole())));
 		
@@ -29,5 +29,6 @@ public interface UserMapper {
 		
 		return user;
 	}
+	
 	
 }

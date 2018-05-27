@@ -1,3 +1,4 @@
+<%@ include file="/WEB-INF/taglib.jsp" %>
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -8,7 +9,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="${pageContext.request.contextPath}/">Home</a>
+      <a class="navbar-brand" href="/">Home</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -35,19 +36,21 @@
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
       </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </li>
-      </ul>
+      <sec:authorize access="!isAuthenticated()">
+	     	<form:form action="/login" method="POST" class="nav navbar-nav navbar-right">
+			
+				<li><input type="text" class="form-control"  name="email" placeholder="Email">
+				<input type="password" class="form-control"  name="password" placeholder="Password"></li>
+				<li><input type="submit" class="btn btn-default" value="Log In"> <a Href="/registration">Register</a></li>
+			
+	   		</form:form>
+	   </sec:authorize>
+	   <sec:authorize access="isAuthenticated()">
+	   		<form:form action="/logout" method="POST" class="nav navbar-nav navbar-right">
+	   			<input type="submit" class="btn btn-default"  value="Log Out">
+	   		</form:form>
+	   </sec:authorize>
+	   		
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>

@@ -62,6 +62,9 @@ public class User extends BaseEntity{
 	@Enumerated(EnumType.STRING)
 	private UserGender gender; 
 
+	@Column(name = "image_url", length = 500)
+	private String imageUrl;
+	
 	@OneToMany(mappedBy = "user")
 	private List<Comment> comment = new ArrayList<>();
 	

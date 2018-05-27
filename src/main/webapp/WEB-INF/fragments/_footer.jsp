@@ -1,3 +1,4 @@
+<%@ include file="/WEB-INF/taglib.jsp" %>
 <footer class="footer">
 	<div class="container">
 		<div class="copy text-center">

@@ -16,7 +16,6 @@ import ua.j.service.UserService;
 public class UserServiceImpl implements UserService {
 
 	private UserRepository userRepository;
-
 	private PasswordEncoder passwordEncoder;
 
 	@Autowired

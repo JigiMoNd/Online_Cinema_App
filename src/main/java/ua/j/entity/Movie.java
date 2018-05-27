@@ -64,9 +64,6 @@ public class Movie extends BaseEntity {
 	
 	@ManyToMany(mappedBy = "movie")
 	private List<Actor> actor = new ArrayList<>();
-	
-	@Enumerated(EnumType.STRING)
-	private Status status;
-	
+		
 	private boolean isDeleted;
 }

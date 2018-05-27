@@ -17,6 +17,8 @@ import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
+import ua.j.formatter.CountryFormatter;
+import ua.j.formatter.GenreFormatter;
 import ua.j.formatter.MovieFormatter;
 
 @Configuration
@@ -32,17 +34,17 @@ public class MvcConfig implements WebMvcConfigurer {
 //	@Override
 //	public void configureViewResolvers(ViewResolverRegistry registry) {
 //		registry.jsp().prefix("/WEB-INF/views/").suffix(".jsp").viewClass(JstlView.class);
-//	} //як подружити суфікси і апачі-тайлс. Які наслідки того, що я це забрав, чи апачі це компенсує?
+//	} //як подружити суфікси і апачі-тайлс?
 
-	@Bean
-	public ViewResolver viewResolver() {
-		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-		viewResolver.setViewClass(JstlView.class);
-		viewResolver.setPrefix("/WEB-INF/views/");
-		viewResolver.setSuffix(".jsp");
-		
-		return viewResolver;
-	}
+//	@Bean
+//	public ViewResolver viewResolver() {
+//		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+//		viewResolver.setViewClass(JstlView.class);
+//		viewResolver.setPrefix("/WEB-INF/views/");
+//		viewResolver.setSuffix(".jsp");
+//		
+//		return viewResolver;
+//	}
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -72,6 +74,8 @@ public class MvcConfig implements WebMvcConfigurer {
 	@Override
 	public void addFormatters(FormatterRegistry registry) {
 		registry.addFormatter(new MovieFormatter());
+		registry.addFormatter(new CountryFormatter());
+		registry.addFormatter(new GenreFormatter());
 	}
 	
 	
