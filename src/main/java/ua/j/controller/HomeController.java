@@ -1,5 +1,7 @@
 package ua.j.controller;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,7 @@ public class HomeController {
 //	}
 
 	@GetMapping("/")
-	public ModelAndView showHome( ) {
+	public ModelAndView showHome() {
 		return new ModelAndView("home");
 	}
 	
@@ -42,9 +44,10 @@ public class HomeController {
 		return new ModelAndView("login");
 	}
 	@GetMapping("/registration")
-	public String ShowRegistration(Model model) {
+	public String showRegistration(Model model, Principal principal) {
 		model.addAttribute("userModel", new RegistrationRequest());
 		model.addAttribute("gender", UserGender.values());
+//		model.addAttribute("userProfile", userService.findUserById(Integer.valueOf(principal.getName())));
 		
 		return "registration";
 	}
@@ -59,7 +62,7 @@ public class HomeController {
 			return "registration";
 		}
 		
-		userService.saveUser(UserMapper.RegistrationRequestToUser(request));
+		userService.saveUser(UserMapper.registrationRequestToUser(request));
 		
 		return "redirect:/login";
 	}

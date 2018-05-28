@@ -1,4 +1,6 @@
 <%@ include file="/WEB-INF/taglib.jsp" %>
+
+
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -34,19 +36,28 @@
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Search">
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit"Editing>Submit</button>
       </form>
       <sec:authorize access="!isAuthenticated()">
 	     	<form:form action="/login" method="POST" class="nav navbar-nav navbar-right">
 			
-				<li><input type="text" class="form-control"  name="email" placeholder="Email">
+				<li ><input type="text" class="form-control"   name="email" placeholder="Email">
 				<input type="password" class="form-control"  name="password" placeholder="Password"></li>
-				<li><input type="submit" class="btn btn-default" value="Log In"> <a Href="/registration">Register</a></li>
+				<li><input type="submit" class="btn btn-default" value="Log In"> <a href="/registration">Register</a></li>
 			
 	   		</form:form>
 	   </sec:authorize>
 	   <sec:authorize access="isAuthenticated()">
 	   		<form:form action="/logout" method="POST" class="nav navbar-nav navbar-right">
+	   			<li>
+	   			
+	   				<c:if test="${ userProfile.imageUrl !=null}">
+						<img src="${ userProfile.imageUrl}" height="80px" vspace="2px">
+					</c:if> 
+					<c:if test="${ userProfile.imageUrl ==null}">
+						<img src="https://res.cloudinary.com/jigimond/image/upload/v1527531712/default-user_1.png" height="80px" vspace="2px">
+					</c:if>
+				</li>
 	   			<input type="submit" class="btn btn-default"  value="Log Out">
 	   		</form:form>
 	   </sec:authorize>
