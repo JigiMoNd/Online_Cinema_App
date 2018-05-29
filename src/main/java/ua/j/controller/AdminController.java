@@ -1,5 +1,6 @@
 package ua.j.controller;
 
+
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,9 @@ import ua.j.service.MovieService;
 import ua.j.service.UserService;
 
 @Controller
-@RequestMapping("/movie")
+@RequestMapping("/admin")
 @SessionAttributes({"countries", "genres"})
-public class MovieController {
+public class AdminController {
 
 	@Autowired
 	private MovieService movieService;
@@ -41,7 +42,7 @@ public class MovieController {
 		model.addAttribute("userProfile", userService.findUserById(Integer.valueOf(principal.getName())));
 		
 		
-		return "movie/add-movie";
+		return "admin/add-movie";
 	}
 	
 	@PostMapping("/add-movie")
