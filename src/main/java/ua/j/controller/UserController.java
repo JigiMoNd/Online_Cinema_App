@@ -26,59 +26,26 @@ import ua.j.service.UserService;
 import ua.j.service.cloudinary.CloudinaryService;
 
 @Controller
-@RequestMapping("/users")
-@Log4j2
+@RequestMapping("/user")
 public class UserController {
 	
 	@Autowired
 	private UserService userService;
 	@Autowired
 	private CloudinaryService cloudinaryService;
-	
-	@GetMapping("/profile")
-	public String showProfile(Model model, Principal principal) {
-		User user = userService.findUserById(Integer.valueOf(principal.getName()));
-		model.addAttribute("userProfile", user);
-		
-		
-		return "users/profile";
-	}
 
 	@GetMapping("/profile/image")
 	public String uploadProfileImage() {
-		return "users/upload-image";
+		return "user/upload-image";
 	}
-	
 	@PostMapping("/profile/image/upload")
 	public String upload(@RequestParam("profileImage") MultipartFile file, Principal principal) {
-		User user = userService.findUserByEmail(principal.getName());
+		User user = userService.findUserById(Integer.valueOf(principal.getName()));
 		String imageUrl = cloudinaryService.uploadFile(file, "user/" + user.getId());
 		user.setImageUrl(imageUrl);
 		userService.updateUser(user);
 		
-		return "redirect:/users/profile";
+		return "redirect:/profile";
 	}
 	
-	@GetMapping("/edit-profile")
-	public String showEditProfile(Model model, Principal principal) {
-//		String id = principal.getName()
-		User user = userService.findUserById(Integer.valueOf(principal.getName()));
-
-		model.addAttribute("gender", UserGender.values());
-		model.addAttribute("editModel", UserMapper.userToEditRequest(user));
-		model.addAttribute("userProfile", userService.findUserById(Integer.valueOf(principal.getName())));
-		
-		return "users/edit-profile";
-	}
-	
-	@PostMapping("/edit-profile")
-	public ModelAndView saveEditedUser(@ModelAttribute("editModel") EditRequest editRequest) {
-		try {
-			userService.updateUser(UserMapper.editRequestToUser(editRequest));
-		} catch (Exception e) {
-			return new ModelAndView("users/edit-profile", "error" , "Oops.. Something went wrong. \n It`s not your fault. \n But also it's not programmer's fault");
-		}
-		
-		return new ModelAndView("redirect:/users/profile");
-	}
 }

@@ -47,22 +47,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.invalidateHttpSession(true)
 			.and()
 				.authorizeRequests()
-//				.antMatchers("/admin/**").hasRole("ADMIN")
-//				.antMatchers("/moder/**").hasAnyRole("ADMIN", "MODERATOR")
-//				.antMatchers("/user/**").hasAnyRole("ADMIN", "USER", "MODERATOR")
-				.antMatchers(
-						"/movie/add-movie", 
-						"/actor/add-actor").hasRole("ADMIN")
-				.antMatchers(
-						"/movie/edit-movie", 
-						"/users/list-of-users", 
-						"/actor/edit-actor").hasAnyRole("ADMIN", "MODERATOR")
-				.antMatchers(
-						"movie/movie", 
-						"users/**").hasAnyRole("ADMIN", "USER", "MODERATOR")
-				.antMatchers(
-						"/actor/**", 
-						"movie/list-of-movies").permitAll()
+				.antMatchers("/admin/**").hasRole("ADMIN")
+				.antMatchers("/moder/**").hasAnyRole("ADMIN", "MODERATOR")
+				.antMatchers("/user/**").hasAnyRole("ADMIN", "USER", "MODERATOR")
+//				.antMatchers(
+//						"/movie/add-movie", 
+//						"/actor/add-actor").hasRole("ADMIN")
+//				.antMatchers(
+//						"/movie/edit-movie", 
+//						"/users/list-of-users", 
+//						"/actor/edit-actor").hasAnyRole("ADMIN", "MODERATOR")
+//				.antMatchers(
+//						"movie/movie", 
+//						"users/**").hasAnyRole("ADMIN", "USER", "MODERATOR")
+//				.antMatchers(
+//						"/actor/**", 
+//						"movie/list-of-movies").permitAll()
 				.anyRequest().permitAll()
 			.and()
 				.exceptionHandling().accessDeniedPage("/")

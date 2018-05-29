@@ -4,37 +4,37 @@
 <a Href="/registration">Register</a> <br>
 
 <sec:authorize access="hasAnyRole('ADMIN', 'MODERATOR', 'USER')">
-<a href="/users/profile">Profile</a> <br>
+<a href="/profile">Profile</a> <br>
 </sec:authorize>
 
 <sec:authorize access="hasRole('ADMIN')">
-<a href="/movie/add-movie">Add Movies</a> <br>
+<a href="/admin/add-movie">Add Movies</a> <br>
 </sec:authorize>
 
 <sec:authorize access="hasAnyRole('ADMIN', 'MODERATOR')">
-<a href="/movie/edit-movie">Edit Movies</a> <br>
+<a href="/moderator/edit-movie">Edit Movies</a> <br>
 </sec:authorize>
 <%-- 
 <sec:authorize access="hasAnyRole('ADMIN', 'MODERATOR', 'USER')"> --%>
-<a href="/movie/movie">Movie</a> <br><%-- 
+<a href="/user/movie">Movie</a> <br><%-- 
 </sec:authorize> --%>
 
-<a href="/movie/list-of-movies">All Movie</a> <br>
+<a href="/list-of-movies">All Movie</a> <br>
 
 <sec:authorize access="hasRole('ADMIN')">
-<a href="/actor/add-actor">Add actor</a> <br>
+<a href="/admin/add-actor">Add actor</a> <br>
 </sec:authorize>
 
 <sec:authorize access="hasAnyRole('ADMIN', 'MODERATOR')">
-<a href="/actor/edit-actor">Edit actor</a> <br>
+<a href="/moderator/edit-actor">Edit actor</a> <br>
 </sec:authorize>
 
-<a href="/actor/actor">Actor</a> <br>
+<a href="/actor">Actor</a> <br>
 
-<a href="/actor/list-of-actors">All actors</a> <br>
+<a href="/list-of-actors">All actors</a> <br>
 
 <sec:authorize access="hasAnyRole('ADMIN', 'MODERATOR')">
-<a href="/users/list-of-users">All Users</a> <br>
+<a href="/moderator/list-of-users">All Users</a> <br>
 </sec:authorize>
 
 <%-- <iframe width="560" height="315" src="https://www.youtube.com/embed/So4BPR-30mY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
