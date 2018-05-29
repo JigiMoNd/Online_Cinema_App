@@ -24,7 +24,7 @@ public interface UserMapper {
 		user.setLastName(request.getLastName());
 		user.setFirstName(request.getFirstName());
 		user.setPassword(request.getPassword());
-		user.setRole(UserRole.ROLE_USER);
+//		user.setRole(UserRole.ROLE_USER);
 		user.setAge(request.getAge());
 		user.setGender(request.getGender());
 		

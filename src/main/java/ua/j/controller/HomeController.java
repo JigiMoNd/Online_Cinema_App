@@ -11,13 +11,19 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.log4j.Log4j2;
 import ua.j.domain.RegistrationRequest;
+import ua.j.entity.User;
 import ua.j.entity.enums.UserGender;
+import ua.j.entity.enums.UserRole;
+import ua.j.mail.Mail;
 import ua.j.mapper.UserMapper;
+import ua.j.service.EmailService;
 import ua.j.service.UserService;
+import ua.j.service.utils.RandomToken;
 
 
 @Controller
@@ -27,6 +33,8 @@ public class HomeController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private EmailService emailService;
 	
 //	@GetMapping("/")
 //	public String showHome( ) {
@@ -61,12 +69,43 @@ public class HomeController {
 			model.addAttribute("userModel", new RegistrationRequest());//що дає тут цей рядок?
 			return "registration";
 		}
+		User user = UserMapper.registrationRequestToUser(request);
+		String token = RandomToken.generateToken();
+		user.setToken(token);
 		
-		userService.saveUser(UserMapper.registrationRequestToUser(request));
+		userService.saveUser(user);
+		
+		Mail mail = new Mail();
+		mail.setTo(request.getEmail());
+		mail.setSubject("Registration confirm");
+		mail.setContent(
+				"You are successfully registered on our site\n "
+				+ "Please confirm your registration\n "
+				+ "Press link to confirm:\n" 
+				+ "http://localhost:8080/verify?token=" + token + "&userid=" + user.getId());
+		
+		emailService.sendMessage(mail);
 		
 		return "redirect:/login";
 	}
 	
+	@GetMapping("/verify")
+	public String verifyEmail(
+		@RequestParam("token") String token,
+		@RequestParam("userid") String userId
+			) {
+		
+		User user = userService.findUserById(Integer.valueOf(userId));
+		if (user.getToken().equals(token)) {
+			user.setToken(null);
+			user.setRole(UserRole.ROLE_USER);
+			userService.updateUser(user);
+		} else {
+			return "redirect:/?validate=false";
+		}
+
+		return "home?logout";
+	}
 	
 	
 	
