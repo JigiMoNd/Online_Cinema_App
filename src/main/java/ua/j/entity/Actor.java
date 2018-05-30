@@ -32,8 +32,7 @@ public class Actor extends BaseEntity {
 	private Country country;
 	
 	@Column(name = "birth_day")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date birthDay = new Date();
+	private String birthDay;
 	
 	@ManyToMany
 	@JoinTable(name = "actor_movie",

@@ -13,7 +13,6 @@ public class CountryFormatter implements Formatter<Country> {
 
 	@Override
 	public Country parse(String objId, Locale arg1) throws ParseException {
-		System.out.println("Parse: " + objId);
 		Country country = new Country();
 		country.setId(Integer.valueOf(objId));
 		return country;
@@ -21,7 +20,6 @@ public class CountryFormatter implements Formatter<Country> {
 
 	@Override
 	public String print(Country country, Locale arg1) {
-		System.out.println("Print: " + country.getId());
 		return String.valueOf(country.getId());
 	}
 

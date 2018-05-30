@@ -45,7 +45,7 @@ public class UserController {
 		user.setImageUrl(imageUrl);
 		userService.updateUser(user);
 		
-		return "redirect:/profile";
+		return "redirect:/unconfirmed/profile";
 	}
 	
 }

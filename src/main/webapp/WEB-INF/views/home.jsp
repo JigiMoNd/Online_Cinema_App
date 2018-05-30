@@ -3,8 +3,8 @@
 
 <a Href="/registration">Register</a> <br>
 
-<sec:authorize access="hasAnyRole('ADMIN', 'MODERATOR', 'USER')">
-<a href="/profile">Profile</a> <br>
+<sec:authorize access="isAuthenticated()">
+<a href="/unconfirmed/profile">Profile</a> <br>
 </sec:authorize>
 
 <sec:authorize access="hasRole('ADMIN')">

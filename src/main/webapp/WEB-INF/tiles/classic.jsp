@@ -24,6 +24,10 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
 </head>
 <body>
+	
+	<script src="${pageContext.request.contextPath}/resources/js/vue.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/axios.min.js"></script>
+	
 
 	<tiles:insertAttribute name="header"/>
 		<div class="container">

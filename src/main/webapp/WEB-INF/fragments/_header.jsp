@@ -48,14 +48,14 @@
 	   		</form:form>
 	   </sec:authorize>
 	   <sec:authorize access="isAuthenticated()">
-	   		<form:form action="/logout" method="POST" class="nav navbar-nav navbar-right">
+	   		<form:form action="/logout" method="POST" class="nav navbar-nav navbar-right" valign="center">
 	   			<li>
 	   			
 	   				<c:if test="${ userProfile.imageUrl !=null}">
-						<img src="${ userProfile.imageUrl}" height="80px" vspace="2px">
+						<img src="${ userProfile.imageUrl}" height="50px" style="margin:17px 5px 17px 0px" class="image-circle">
 					</c:if> 
 					<c:if test="${ userProfile.imageUrl ==null}">
-						<img src="https://res.cloudinary.com/jigimond/image/upload/v1527531712/default-user_1.png" height="80px" vspace="2px">
+						<img src="https://res.cloudinary.com/jigimond/image/upload/v1527531712/default-user_1.png" height="50px" style="margin:17px 5px 17px 0px" class="image-circle">
 					</c:if>
 				</li>
 	   			<input type="submit" class="btn btn-default"  value="Log Out">

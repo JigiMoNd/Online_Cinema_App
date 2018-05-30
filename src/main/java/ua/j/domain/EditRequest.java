@@ -29,6 +29,8 @@ public class EditRequest {
 	private int age;
 
 	private UserGender gender; 
+	
+	private String imageUrl;
 
 	
 }

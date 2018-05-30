@@ -33,13 +33,21 @@ Role: ${ userProfile.role.role } </p> <br>
 			<a href="edit-profile" class="btn btn-default"  style="text-align:right">Edit profile</a>
 		</td>
 		<td align="center">
-			<c:if test="${ userProfile.imageUrl !=null}">
-				<img src="${ userProfile.imageUrl}" height="200px">
-			</c:if> 
-			<c:if test="${ userProfile.imageUrl ==null}">
+			
+			<sec:authorize access="hasAnyRole('USER', 'ADMIN', 'MODERATOR')">
+				<c:if test="${ userProfile.imageUrl !=null}">
+					<img src="${ userProfile.imageUrl}" height="200px">
+				</c:if> 
+				<c:if test="${ userProfile.imageUrl ==null}">
+					<img src="https://res.cloudinary.com/jigimond/image/upload/v1527531712/default-user_1.png" height="200px">
+				</c:if><br>
+				<a href="/user/profile/image" class="btn btn-default">Upload image</a><br>
+			</sec:authorize>
+			<sec:authorize access="hasRole('UNCONFIRMED')">
 				<img src="https://res.cloudinary.com/jigimond/image/upload/v1527531712/default-user_1.png" height="200px">
-			</c:if><br>
-			<a href="/user/profile/image" class="btn btn-default">Upload image</a><br>
+				<br>
+				<p class="btn-default">Please confirm your e-mail<br>to upload profile image</p><br>
+			</sec:authorize>
 		</td>
 	</tr>
 </table>

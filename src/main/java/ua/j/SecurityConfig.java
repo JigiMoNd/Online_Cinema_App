@@ -48,8 +48,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 				.authorizeRequests()
 				.antMatchers("/admin/**").hasRole("ADMIN")
-				.antMatchers("/moder/**").hasAnyRole("ADMIN", "MODERATOR")
+				.antMatchers("/moderator/**").hasAnyRole("ADMIN", "MODERATOR")
 				.antMatchers("/user/**").hasAnyRole("ADMIN", "USER", "MODERATOR")
+				.antMatchers("/unconfirmed/**").hasAnyRole("ADMIN", "USER", "MODERATOR", "UNCONFIRMED")
 //				.antMatchers(
 //						"/movie/add-movie", 
 //						"/actor/add-actor").hasRole("ADMIN")
@@ -74,6 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
+		web.ignoring().antMatchers("/resources/**");
 	}
 	
 	

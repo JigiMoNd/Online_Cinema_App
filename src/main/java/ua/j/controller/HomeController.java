@@ -67,7 +67,7 @@ public class HomeController {
 		log.debug("Try to save user: " + request.getEmail());
 		if(br.hasErrors()) {
 			log.debug("Error heppened: " + request);
-			model.addAttribute("userModel", new RegistrationRequest());//що дає тут цей рядок?
+			model.addAttribute("userModel", new RegistrationRequest());
 			return "registration";
 		}
 		User user = UserMapper.registrationRequestToUser(request);
@@ -95,8 +95,8 @@ public class HomeController {
 		@RequestParam("token") String token,
 		@RequestParam("userid") String userId
 			) {
-		
 		User user = userService.findUserById(Integer.valueOf(userId));
+	
 		if (user.getToken().equals(token)) {
 			user.setToken(null);
 			user.setRole(UserRole.ROLE_USER);
@@ -104,42 +104,10 @@ public class HomeController {
 		} else {
 			return "redirect:/?validate=false";
 		}
-
+	
 		return "home";
 	}
 
-	@GetMapping("/profile")
-	public String showProfile(Model model, Principal principal) {
-		User user = userService.findUserById(Integer.valueOf(principal.getName()));
-		model.addAttribute("userProfile", user);
-		return "profile";
-	}
 
-	@GetMapping("/edit-profile")
-	public String showEditProfile(Model model, Principal principal) {
-//		String id = principal.getName();
-		User user = userService.findUserById(Integer.valueOf(principal.getName()));
 
-		model.addAttribute("gender", UserGender.values());
-		model.addAttribute("editModel", UserMapper.userToEditRequest(user));
-		model.addAttribute("userProfile", userService.findUserById(Integer.valueOf(principal.getName())));
-		
-		return "edit-profile";
-	}
-	
-	@PostMapping("/edit-profile")
-	public ModelAndView saveEditedUser(@ModelAttribute("editModel") EditRequest editRequest) {
-		try {
-			userService.updateUser(UserMapper.editRequestToUser(editRequest));
-		} catch (Exception e) {
-			return new ModelAndView("edit-profile", "error" , "Oops.. Something went wrong. \n It`s not your fault. \n But also it's not programmer's fault");
-		}
-		
-		return new ModelAndView("redirect:/profile");
-	}
-	
-	
-	
-	
-	
 }

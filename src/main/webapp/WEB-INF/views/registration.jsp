@@ -20,7 +20,7 @@
 				<form:option value="${userAge}">${userAge}</form:option>
 			</c:forEach>
 		</form:select> <br>
-	Gender: <form:radiobuttons  path="gender" items="${gender}" itemLabel="gender"/> <br>
+	Gender: <form:radiobuttons  path="gender" items="${gender}" itemLabel="gender" checked="checked" value=" "/> <br>
 	
 	<input type="submit" value="Register">
 
