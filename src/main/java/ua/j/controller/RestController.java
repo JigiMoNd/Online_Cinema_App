@@ -23,9 +23,17 @@ public class RestController {
 	public List<User> showUser() {
 		return userService.findAllUsers();
 	}
+	
 	@GetMapping("/delete/{userId}")
 	public ResponseEntity<?> deleteUser(@PathVariable("userId") int userId) {
 		userService.deleteUserById(userId);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}	
+	
+	@GetMapping("/change-role/{userId}")
+	public ResponseEntity<?> changeUserRole(@PathVariable("userId") int userId) {
+		User user = userService.findUserById(userId);
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
