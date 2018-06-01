@@ -5784,3 +5784,4 @@ Caused by: javax.servlet.ServletException: File [&#47;WEB-INF&#47;views&#47;erro
 2018-06-01 02:25:14 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
 2018-06-01 02:25:14 [restartedMain] INFO  ua.j.CinemAppApplication - Started CinemAppApplication in 7.625 seconds (JVM running for 7529.366)
 2018-06-01 02:25:14 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2018-06-01 03:36:30 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring FrameworkServlet 'dispatcherServlet'
