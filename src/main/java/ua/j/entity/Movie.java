@@ -26,11 +26,13 @@ import ua.j.entity.enums.Status;
 @Getter @Setter
 public class Movie extends BaseEntity {
 
-	private String name;
+	private String name; 
 	
 	private int year;
 
 	private int length;
+	
+	private int rating;
 		
 	@Column(length = 500)
 	private String description;
@@ -51,10 +53,10 @@ public class Movie extends BaseEntity {
 	private List<Genre> genre = new ArrayList<>();
 	
 	@Column(name = "image_url")
-	private String imageURL;
+	private String imageUrl;
 	
 	@Column(name = "player_url")
-	private String playerURL;
+	private String playerUrl;
 	
 	@ManyToMany(mappedBy = "movie")
 	private List<Country> country = new ArrayList<Country>();

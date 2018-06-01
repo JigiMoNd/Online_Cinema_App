@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import ua.j.entity.Actor;
 import ua.j.entity.Movie;
@@ -21,6 +23,7 @@ import ua.j.service.CountryService;
 import ua.j.service.GenreService;
 import ua.j.service.MovieService;
 import ua.j.service.UserService;
+import ua.j.service.cloudinary.CloudinaryService;
 
 @Controller
 @RequestMapping("/admin")
@@ -37,6 +40,8 @@ public class AdminController {
 	private UserService userService;
 	@Autowired
 	private ActorService actorService;
+	@Autowired
+	private CloudinaryService cloudinaryService;
 	
 	@GetMapping("/add-movie")
 	public String ShowAddMovie(Model model, Principal principal) {
@@ -51,8 +56,24 @@ public class AdminController {
 	}
 	
 	@PostMapping("/add-movie")
-	public String saveMovie(@ModelAttribute("movieModel") Movie movie) {
+	public String saveMovie(
+			@ModelAttribute("movieModel") Movie movie,
+			@RequestParam("poster") MultipartFile file) {
+		System.out.println("done1");
 		movieService.saveMovie(movie);
+		System.out.println("\n\ndone2" + file + "\n\n");
+	try {
+		String imageUrl = cloudinaryService.uploadFile(file, "movie/" + movie.getId());
+		System.out.println("\n\n" + imageUrl + " " + file + "\n\n");
+		movie.setImageUrl(imageUrl);
+		movieService.saveMovie(movie);
+		} catch (StringIndexOutOfBoundsException e) {
+			movie.setImageUrl("http://res.cloudinary.com/jigimond/image/upload/v1527796082/default_poster.jpg");
+			movieService.saveMovie(movie);
+					
+			return "redirect:/";
+		}
+		
 		
 		return "redirect:/";
 	}

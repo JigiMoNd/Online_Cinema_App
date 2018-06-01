@@ -23,6 +23,7 @@ import ua.j.entity.enums.UserRole;
 import ua.j.mail.Mail;
 import ua.j.mapper.UserMapper;
 import ua.j.service.EmailService;
+import ua.j.service.MovieService;
 import ua.j.service.UserService;
 import ua.j.service.utils.RandomToken;
 
@@ -32,6 +33,8 @@ import ua.j.service.utils.RandomToken;
 public class HomeController {
 	
 
+	@Autowired
+	private MovieService movieService;
 	@Autowired
 	private UserService userService;
 	@Autowired
@@ -107,6 +110,15 @@ public class HomeController {
 	
 		return "home";
 	}
+	
+	@GetMapping("/list-of-movies")
+	public String showMovies(Model model) {
+		model.addAttribute("movies", movieService.findAllMovies());
+		
+		return "list-of-movies";
+	}
+	
+	
 
 
 

@@ -59,6 +59,7 @@
 									</div>
 								</td>
 								<td>
+								<img :src="user.imageUrl" width="50px">
 								</td>
 							</tr>
 						</tbody>
