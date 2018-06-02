@@ -13,7 +13,7 @@
 <footer class="footer footer-bottom">
 	<div class="container">
 		<div class="copy text-center" >
-			Copyright 2018 <a href="#">Created by JigiMoNd</a>
+			Copyright 2018 <a href="https://github.com/JigiMoNd/Online_Cinema_App.git">Created by JigiMoNd</a>
 		</div>
 	</div>
 </footer>
