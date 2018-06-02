@@ -59,12 +59,9 @@ public class AdminController {
 	public String saveMovie(
 			@ModelAttribute("movieModel") Movie movie,
 			@RequestParam("poster") MultipartFile file) {
-		System.out.println("done1");
 		movieService.saveMovie(movie);
-		System.out.println("\n\ndone2" + file + "\n\n");
 	try {
 		String imageUrl = cloudinaryService.uploadFile(file, "movie/" + movie.getId());
-		System.out.println("\n\n" + imageUrl + " " + file + "\n\n");
 		movie.setImageUrl(imageUrl);
 		movieService.saveMovie(movie);
 		} catch (StringIndexOutOfBoundsException e) {

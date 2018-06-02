@@ -5,6 +5,9 @@ import java.security.Principal;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import lombok.extern.log4j.Log4j2;
 import ua.j.domain.EditRequest;
 import ua.j.domain.RegistrationRequest;
+import ua.j.entity.Movie;
 import ua.j.entity.User;
 import ua.j.entity.enums.UserGender;
 import ua.j.entity.enums.UserRole;
@@ -26,6 +30,7 @@ import ua.j.service.EmailService;
 import ua.j.service.MovieService;
 import ua.j.service.UserService;
 import ua.j.service.utils.RandomToken;
+import ua.j.domain.SimpleFilter;
 
 
 @Controller
@@ -112,9 +117,33 @@ public class HomeController {
 	}
 	
 	@GetMapping("/list-of-movies")
-	public String showMovies(Model model) {
-		model.addAttribute("movies", movieService.findAllMovies());
+	public String showMovies(Model model,
+			@PageableDefault Pageable pageable) {
+		Page<Movie> page = movieService.FindMovieByPage(pageable);
+				
+		int currentPage = page.getNumber();
+		int begin = Math.max(1, currentPage - 5);
+		int end = Math.min(begin + 5, page.getNumber());
 		
+		model.addAttribute("beginIndex", begin);
+		model.addAttribute("endIndex", end);
+		model.addAttribute("currentIndex", currentPage);
+		
+		model.addAttribute("movies", page);
+		model.addAttribute("moviesByPageSize", page.getContent());//movieService.findAllMovies());
+		return "list-of-movies";
+	}
+
+	@GetMapping("/list-of-movies/search")
+	public String showMoviesByFilter(
+			Model model, 
+			@RequestParam(value = "search", required = false) String search
+			) {
+		SimpleFilter filter = null;
+		if(search != null) {
+			filter = new SimpleFilter(search);
+		}
+		model.addAttribute("moviesByPageSize", movieService.FindAllMoviesByFilter(filter));
 		return "list-of-movies";
 	}
 	

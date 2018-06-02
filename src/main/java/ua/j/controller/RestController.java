@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ua.j.entity.User;
+import ua.j.entity.enums.UserRole;
 import ua.j.service.UserService;
 
 @org.springframework.web.bind.annotation.RestController
@@ -30,10 +31,33 @@ public class RestController {
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}	
-	
-	@GetMapping("/change-role/{userId}")
-	public ResponseEntity<?> changeUserRole(@PathVariable("userId") int userId) {
+
+	@GetMapping("/change-to-user/{userId}")
+	public ResponseEntity<?> changeRoleUser(@PathVariable("userId") int userId) {
 		User user = userService.findUserById(userId);
+		user.setRole(UserRole.ROLE_USER);
+
+		userService.updateUser(user);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@GetMapping("/change-to-admin/{userId}")
+	public ResponseEntity<?> changeRoleAdmin(@PathVariable("userId") int userId) {
+		User user = userService.findUserById(userId);
+		user.setRole(UserRole.ROLE_ADMIN);
+
+		userService.updateUser(user);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@GetMapping("/change-to-moderator/{userId}")
+	public ResponseEntity<?> changeRoleModerator(@PathVariable("userId") int userId) {
+		User user = userService.findUserById(userId);
+		user.setRole(UserRole.ROLE_MODERATOR);
+		
+		userService.updateUser(user);
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

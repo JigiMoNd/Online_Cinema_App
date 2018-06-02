@@ -59,6 +59,10 @@ public class ModeratorController {
 //		
 //		return new ModelAndView("redirect:/unconfirmed/profile");
 //	}
-	
+	@GetMapping("/dashboard")
+	public String showDashboard() {
+		return "moderator/dashboard";
+	}
+
 	
 }

@@ -1,65 +1,82 @@
 <%@ include file="/WEB-INF/taglib.jsp" %>
+
 <div id="app">
 	<div class="section">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
 					<table class="table table-hover table-striped">
+						<thead>
+							<tr>
+								<th colspan="8" style="text-align:center">List of users</th></tr>
+							<tr>
+								<th>ID</th>
+								<th>Full name</th>
+								<th>E-mail</th>
+								<th>Age</th>
+								<th>Image</th>
+								<th>Role</th>
+								<th colspan="2"></th>
+							</tr>
+						</thead>
 						<tbody>
 							<tr v-for="user in users" :key="user.id">
-								<td>
+								<td style="vertical-align:middle;">
 								{{ user.id}}
 								</td>
-								
-									<td>
-										<sec:authorize access="hasRole('MODERATOR')">
-											<span v-if="user.role == 'ROLE_ADMIN'">
-												<a href="#"> <i class="glyphicon glyphicon-king" style="font-size: 25px;"></i> Admin</a>
-											</span>
-											<span v-else-if ="user.role == 'ROLE_MODERATOR'">
-												<a href="#"> <i class="glyphicon glyphicon-queen" style="font-size: 25px;"></i> Moderator</a>
-											</span>
-											<span v-else-if="user.role == 'ROLE_USER'">
-												<a href="#"> <i class="glyphicon glyphicon-bishop" style="font-size: 25px;"></i> User</a>
-											</span>
-											<span v-else-if="user.role == 'ROLE_UNCONFIRMED'">
-												<a href="#"> <i class="glyphicon glyphicon-pawn" style="font-size: 25px;"></i> Unconfirmed</a>
-											 </span>
-										</sec:authorize>
-										
-										<sec:authorize access="hasRole('ADMIN')">
-											<span v-if="user.role == 'ROLE_ADMIN'">
-												<button @click="changeUserRole(user)" class="btn btn-primary"> <i class="glyphicon glyphicon-king" style="font-size: 25px;"></i> Admin</button>
-											</span>
-											<span v-else-if ="user.role == 'ROLE_MODERATOR'">
-												<button @click="changeUserRole(user)" class="btn btn-primary"> <i class="glyphicon glyphicon-queen" style="font-size: 25px;"></i> Moderator</button>
-											</span>
-											<span v-else-if="user.role == 'ROLE_USER'">
-												<button @click="changeUserRole(user)" class="btn btn-primary"> <i class="glyphicon glyphicon-bishop" style="font-size: 25px;"></i> User</button>
-											</span>
-											<span v-else-if="user.role == 'ROLE_UNCONFIRMED'">
-												<button @click="changeUserRole(user)" class="btn btn-primary"> <i class="glyphicon glyphicon-pawn" style="font-size: 25px;"></i> Unconfirmed</button>
-											 </span>
-										</sec:authorize>
-									</td>
-								<td>
+								<td style="vertical-align:middle;">
 								{{ user.firstName}} {{user.lastName}}
 								</td>
-								<td>
+								<td style="vertical-align:middle;">
 								{{ user.email}}
 								</td>
-								<td>
+								<td style="vertical-align:middle;">
 								{{ user.age}}
 								</td>
-								<td>
+								<td style="vertical-align:middle;">
+									<img :src="user.imageUrl" width="50px">
+								</td>
+								<td style="vertical-align:middle;">
+									<span v-if="user.role == 'ROLE_ADMIN'">
+										<i class="glyphicon glyphicon-king" style="font-size: 15px;">Admin</i> 
+									</span>
+									<span v-else-if ="user.role == 'ROLE_MODERATOR'">
+										<i class="glyphicon glyphicon-queen" style="font-size: 15px;">Moderator</i>
+									</span>
+									<span v-else-if="user.role == 'ROLE_USER'">
+										<i class="glyphicon glyphicon-bishop" style="font-size: 15px;">User</i>
+									</span>
+									<span v-else-if="user.role == 'ROLE_UNCONFIRMED'">
+										<i class="glyphicon glyphicon-pawn" style="font-size: 15px;">Unconfirmed</i> 
+									 </span>
+								</td>
+								<td style="vertical-align:middle; width:20%" >
+									<sec:authorize access="hasRole('ADMIN')">
+										<span v-if="user.role == 'ROLE_ADMIN'">
+											<button @click="changeRoleUser(user)" class="btn btn-primary" style=width:100%>Change role to "User" </button> <br>
+											<button @click="changeRoleModerator(user)" class="btn btn-primary" style=width:100%> Change role to "Moderator" </button> <br>
+										</span>
+										<span v-else-if ="user.role == 'ROLE_MODERATOR'">
+											<button @click="changeRoleUser(user)" class="btn btn-primary" style=width:100%> Change role to "User" </button> <br>
+											<button @click="changeRoleAdmin(user)" class="btn btn-primary" style=width:100%> Change role to "Admin"</button> <br>
+										</span>
+										<span v-else-if="user.role == 'ROLE_USER'">
+											<button @click="changeRoleAdmin(user)" class="btn btn-primary" style=width:100%>Change role to "Admin" </button> <br>
+											<button @click="changeRoleModerator(user)" class="btn btn-primary" style=width:100%>Change role to "Moderator" </button> <br>
+										</span>
+										<span v-else-if="user.role == 'ROLE_UNCONFIRMED'">
+											<button @click="changeRoleUser(user)" class="btn btn-primary" style=width:100%> Change role to "User" </button> <br>
+											<button @click="changeRoleModerator(user)" class="btn btn-primary" style=width:100%>Change role to "Moderator" </button> <br>
+											<button @click="changeRoleAdmin(user)" class="btn btn-primary" style=width:100%> Change role to "Admin" </button> <br>
+										 </span>
+									</sec:authorize>
+								</td>
+								<td style="vertical-align:middle;">
 									<div class="btn-group">
 										<button class="btn btn-danger" type="button" @click="deleteUser(user)">
 											<i class="glyphicon glyphicon-remove-circle"></i> Delete 
 										</button>
 									</div>
-								</td>
-								<td>
-								<img :src="user.imageUrl" width="50px">
 								</td>
 							</tr>
 						</tbody>
@@ -98,8 +115,26 @@
 					console.log(error);
 				})
 			},
-			changeUserRole: function(user) {
-				axios.get(this.rootUrl + "/change-role/" + user.id)
+			changeRoleUser: function(user) {
+				axios.get(this.rootUrl + "/change-to-user/" + user.id)
+				.then(function(resp) {
+					console.log(resp);
+					location.reload();
+				}).catch(function(error) {
+					console.log(error);
+				})
+			},
+			changeRoleAdmin: function(user) {
+				axios.get(this.rootUrl + "/change-to-admin/" + user.id)
+				.then(function(resp) {
+					console.log(resp);
+					location.reload();
+				}).catch(function(error) {
+					console.log(error);
+				})
+			},
+			changeRoleModerator: function(user) {
+				axios.get(this.rootUrl + "/change-to-moderator/" + user.id)
 				.then(function(resp) {
 					console.log(resp);
 					location.reload();

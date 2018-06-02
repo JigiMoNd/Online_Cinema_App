@@ -51,24 +51,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/moderator/**").hasAnyRole("ADMIN", "MODERATOR")
 				.antMatchers("/user/**").hasAnyRole("ADMIN", "USER", "MODERATOR")
 				.antMatchers("/unconfirmed/**").hasAnyRole("ADMIN", "USER", "MODERATOR", "UNCONFIRMED")
-//				.antMatchers(
-//						"/movie/add-movie", 
-//						"/actor/add-actor").hasRole("ADMIN")
-//				.antMatchers(
-//						"/movie/edit-movie", 
-//						"/users/list-of-users", 
-//						"/actor/edit-actor").hasAnyRole("ADMIN", "MODERATOR")
-//				.antMatchers(
-//						"movie/movie", 
-//						"users/**").hasAnyRole("ADMIN", "USER", "MODERATOR")
-//				.antMatchers(
-//						"/actor/**", 
-//						"movie/list-of-movies").permitAll()
 				.anyRequest().permitAll()
 			.and()
 				.exceptionHandling().accessDeniedPage("/")
 			.and()
-				.sessionManagement().maximumSessions(1);
+				.sessionManagement().maximumSessions(1)/*
+			.and().and()
+				.rememberMe()
+				.rememberMeParameter("remeemberMe")
+				.key("key")
+				.rememberMeCookieName("RememberMeCookie")
+				.tokenValiditySeconds(365 * 24 * 60 * 60)*/;
+		
 	}
 	
 	

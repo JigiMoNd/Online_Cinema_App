@@ -2,9 +2,20 @@ package ua.j.service.impl;
 
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import ua.j.domain.SimpleFilter;
 import ua.j.entity.Movie;
 import ua.j.repository.MovieRepository;
 import ua.j.service.MovieService;
@@ -33,6 +44,38 @@ public class MovieServiceImpl implements MovieService {
 	@Override
 	public void deleteMovieById(int id) {
 		movieRepository.deleteById(id);
+	}
+
+	@Override
+	public List<Movie> FindAllMoviesByFilter(SimpleFilter filter) {
+		System.out.println("\n\n" 
+	+ getSpecification(filter) + "\n" 
+	+ movieRepository.findAll(getSpecification(filter)) + "\n\n");
+		return movieRepository.findAll(getSpecification(filter));
+	}
+
+	private Specification<Movie> getSpecification(SimpleFilter filter) {
+		return new Specification<Movie>() {
+			private static final long serialVersionUID = 1L;
+			
+			@Override
+			public Predicate toPredicate(Root<Movie> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+				if (filter.getSearch().isEmpty()) return null;
+				
+				return cb.like(root.get("name"), "%" + filter.getSearch() + "%");
+			}
+		};
+	}
+
+	@Override
+	public Page<Movie> FindMovieByPage(Pageable pageable) {
+		PageRequest pageRequest = 
+				new PageRequest(
+						pageable.getPageNumber(), 
+						pageable.getPageSize(),
+						pageable.getSort());
+				
+		return movieRepository.findAll(pageRequest);
 	}
 
 }
