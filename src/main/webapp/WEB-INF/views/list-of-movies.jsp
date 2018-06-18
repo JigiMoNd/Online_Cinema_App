@@ -1,4 +1,15 @@
 <%@ include file="/WEB-INF/taglib.jsp" %>
+
+<style>
+.flex-row {
+	padding: 5px 0 0;
+	justify-content: space-between;
+	text-align: center;
+	}
+.ratings { 
+	text-align: center;
+	}
+</style>
 	
 	<c:url var="firstUrl" value="/list-of-movies?page=0"/>
 	<c:url var="lastUrl" value="/list-of-movies?page=${ movies.totalPages }"/>
@@ -50,36 +61,43 @@
 				</c:choose>
 			</ul>
 		</div>
-		
+	</div>
 <div class="containe">
 <c:forEach items="${ moviesByPageSize }" var="movie">
-<!-- <section class="movies" id="movies">
-    <h2>Featured Movies</h2>
-	<div class="row">
-		<div class="col-lg-3 col-md-4 col-sm-6">
-			<article class="card">
-				<header class="title-header">
-					<h3>Movie Title</h3>
-				</header>
-				<div class="card-block">
-					<div class="img-card">
-						<img src="//placehold.it/300x250" alt="Movie" class="w-100" />
-					</div>
-					<p class="tagline card-text text-xs-center">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-					<a href="#" class="btn btn-primary btn-block"><i class="fa fa-eye"></i> Watch Now</a>
-				</div>
-			</article>
-		</div>
-	</div>
-</section> -->
 
 	<div class="col-md-3 col-sm-6">
-    		<span class="thumbnail">
-      			<img src="${ movie.imageUrl }" width="100" >
-      			<h4>${ movie.name }</h4>
-      			
+    		<div class="thumbnail" style="height:290px;">
+      			<div class="flex-row">
+	      			<div>
+		      			<sec:authorize access="hasAnyRole('ADMIN', 'MODERATOR')">
+		      				<a type="button" class="btn btn-primary" 
+								href="${pageContext.request.contextPath}/moderator/edit-movie/${movie.id}">
+								<i class="glyphicon glyphicon-pencil"></i>
+							</a>
+						</sec:authorize>
+					</div>
+	      			<div>
+	      				<img src="${ movie.imageUrl }" width="100" >
+	      			</div>
+	      			<div>
+	      				<sec:authorize access="hasRole('ADMIN')">
+		      				<a type="button" class="btn btn-danger" 
+								href="${pageContext.request.contextPath}/admin/delete-movie/${movie.id}">
+								<i class="glyphicon glyphicon-remove-circle"></i>
+							</a>
+						</sec:authorize>
+	      			</div>
+      			</div>
+      			<div class="flex-row">
+      				<div style="width:50%">
+      					<h4>${ movie.name }</h4>
+      				</div>
+      				<div style="width:50%" class="col-md-6 col-sm-6">
+      					<a href="${pageContext.request.contextPath}/movie/${movie.id}" class="button btn btn-success right" >Watch now</a>
+      				</div>
+      			</div>
       			<div class="ratings">
-      				<c:forEach begin="1" end="5" var="star">
+      				<c:forEach begin="1" end="10" var="star">
       					<c:choose>
       						<c:when test="${ star le movie.rating}">	
       					 		<span class="glyphicon glyphicon-star"></span>
@@ -90,18 +108,8 @@
        					</c:choose>
        				</c:forEach>
                 </div>
-      			<p>${ movie.description }</p>
-      			<hr class="line">
-      			<div class="row">
-      				<div class="col-md-6 col-sm-6">
-      					<p class="price">$29,90</p>
-      				</div>
-      				<div class="col-md-6 col-sm-6">
-      					<button class="btn btn-success right" > BUY ITEM</button>
-      				</div>
-      				
-      			</div>
-    		</span>
+      			<div style="height:60px; overflow:auto">${ movie.description }</div>
+    		</div>
   		</div>
   	</c:forEach>
 </div>

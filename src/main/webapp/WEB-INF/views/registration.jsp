@@ -21,7 +21,7 @@
 			</c:forEach>
 		</form:select> <br>
 	Gender: <form:radiobuttons  path="gender" items="${gender}" itemLabel="gender" checked="checked" value=" "/> <br>
-	
+	<form:hidden path="imageUrl" value="https://res.cloudinary.com/jigimond/image/upload/v1527531712/default-user_1.png"></form:hidden>
 	<input type="submit" value="Register">
 
 

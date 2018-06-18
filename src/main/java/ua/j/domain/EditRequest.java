@@ -1,5 +1,7 @@
 package ua.j.domain;
 
+import java.util.Date;
+
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
@@ -31,6 +33,8 @@ public class EditRequest {
 	private UserGender gender; 
 	
 	private String imageUrl;
+	
+//	private Date createdAt = new Date();
 
 	
 }

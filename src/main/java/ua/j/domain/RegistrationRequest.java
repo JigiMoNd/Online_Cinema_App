@@ -34,6 +34,8 @@ public class RegistrationRequest {
 	
 	private int age;
 
+	private String imageUrl;
+	
 	private UserGender gender; 
 	
 }

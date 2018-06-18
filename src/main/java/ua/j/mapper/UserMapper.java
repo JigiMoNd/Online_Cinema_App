@@ -27,6 +27,7 @@ public interface UserMapper {
 		user.setRole(UserRole.ROLE_UNCONFIRMED);
 		user.setAge(request.getAge());
 		user.setGender(request.getGender());
+		user.setImageUrl(request.getImageUrl());
 		
 		return user;
 	}
@@ -41,6 +42,7 @@ public interface UserMapper {
 		request.setAge(user.getAge());
 		request.setGender(user.getGender());
 		request.setId(user.getId());
+//		request.setCreatedAt(user.getCreatedAt());
 		request.setImageUrl(user.getImageUrl());
 		
 		return request;
@@ -56,6 +58,7 @@ public interface UserMapper {
 		user.setAge(request.getAge());
 		user.setGender(request.getGender());
 		user.setId(request.getId());
+//		user.setCreatedAt(request.getCreatedAt());
 		user.setImageUrl(request.getImageUrl());
 		
 		return user;

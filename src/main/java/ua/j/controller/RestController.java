@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ua.j.entity.Actor;
 import ua.j.entity.User;
 import ua.j.entity.enums.UserRole;
+import ua.j.service.ActorService;
 import ua.j.service.UserService;
 
 @org.springframework.web.bind.annotation.RestController
@@ -19,6 +21,8 @@ public class RestController {
 
 	@Autowired 
 	private UserService userService;
+	@Autowired
+	private ActorService actorService;
 	
 	@GetMapping("/list/users")
 	public List<User> showUser() {
@@ -61,5 +65,10 @@ public class RestController {
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+//	
+//	@GetMapping("/list/actors")
+//	public List<Actor> showActor() {
+//		return actorService.findAllActors();
+//	}
 	
 }

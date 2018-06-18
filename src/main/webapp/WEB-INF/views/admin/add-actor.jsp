@@ -13,7 +13,7 @@
 	Birthday: 	<form:input type="date" path="birthDay"/>
 	<form:errors type="date" cssClass="error"/> <br>
 	Movie: <br> <form:select path="movie" items="${movies}" itemLabel="name" itemValue="id"> 
-	<form:errors type="country" cssClass="error"/> </form:select> <br>
+	<form:errors type="movie" cssClass="error"/> </form:select> <br>
 		
 	<input type="submit" value="Add actor">
 

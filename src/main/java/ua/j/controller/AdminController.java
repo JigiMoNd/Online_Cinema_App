@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ua.j.entity.Actor;
 import ua.j.entity.Movie;
+import ua.j.entity.User;
 import ua.j.entity.enums.AgeLimit;
 import ua.j.service.ActorService;
 import ua.j.service.CountryService;
@@ -45,11 +47,13 @@ public class AdminController {
 	
 	@GetMapping("/add-movie")
 	public String ShowAddMovie(Model model, Principal principal) {
+		User user = userService.findUserById(Integer.valueOf(principal.getName()));
+		model.addAttribute("userProfile", user);
+		
 		model.addAttribute("movieModel", new Movie());
 		model.addAttribute("countries", countryService.findAllCountries());
 		model.addAttribute("genres", genreService.findAllGenres());
 		model.addAttribute("ageLimit", AgeLimit.values());
-		model.addAttribute("userProfile", userService.findUserById(Integer.valueOf(principal.getName())));
 		
 		
 		return "admin/add-movie";
@@ -68,7 +72,7 @@ public class AdminController {
 			movie.setImageUrl("http://res.cloudinary.com/jigimond/image/upload/v1527796082/default_poster.jpg");
 			movieService.saveMovie(movie);
 					
-			return "redirect:/";
+			return "redirect:/list-of-movies";
 		}
 		
 		
@@ -76,7 +80,12 @@ public class AdminController {
 	}
 	
 	@GetMapping("/add-actor")
-	public String showAddActor(Model model, Principal principal) {
+	public String showAddActor(
+			Model model,
+			Principal principal) {
+		User user = userService.findUserById(Integer.valueOf(principal.getName()));
+		model.addAttribute("userProfile", user);
+		
 		model.addAttribute("actorModel", new Actor());
 		model.addAttribute("countries", countryService.findAllCountries());
 		model.addAttribute("movies", movieService.findAllMovies());
@@ -86,6 +95,28 @@ public class AdminController {
 	@PostMapping("/add-actor")
 	public String saveActor(@ModelAttribute("acmtorModel") Actor actor) {
 		actorService.saveActor(actor);
-		return "redirect:/";
+		return "redirect:/list-of-actors";
 	}
+
+	@GetMapping("delete-actor/{actorId}")
+	public String deleteActorById(
+			@PathVariable("actorId") int actorId
+			) {
+		
+		actorService.deleteActorById(actorId);
+		
+		return "redirect:/list-of-actors";
+	}
+	
+	@GetMapping("delete-movie/{movieId}")
+	public String deleteMovieById(
+			@PathVariable("movieId") int movieId
+			) {
+		
+		movieService.deleteMovieById(movieId);
+		
+		return "redirect:/list-of-movies";
+	}
+
+	
 }

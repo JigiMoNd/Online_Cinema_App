@@ -6,6 +6,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -76,6 +77,13 @@ public class MovieServiceImpl implements MovieService {
 						pageable.getSort());
 				
 		return movieRepository.findAll(pageRequest);
+	}
+
+	@Override
+	@Transactional
+		public void updateMovie(Movie movie) {
+			movieRepository.save(movie);
+		
 	}
 
 }

@@ -1,6 +1,7 @@
 package ua.j.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -19,9 +20,11 @@ import org.springframework.web.servlet.ModelAndView;
 import lombok.extern.log4j.Log4j2;
 import ua.j.domain.EditRequest;
 import ua.j.domain.RegistrationRequest;
+import ua.j.entity.Actor;
 import ua.j.entity.User;
 import ua.j.entity.enums.UserGender;
 import ua.j.mapper.UserMapper;
+import ua.j.service.ActorService;
 import ua.j.service.UserService;
 import ua.j.service.cloudinary.CloudinaryService;
 
@@ -33,9 +36,16 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	private CloudinaryService cloudinaryService;
+	@Autowired
+	private ActorService actorService;
 
 	@GetMapping("/profile/image")
-	public String uploadProfileImage() {
+	public String uploadProfileImage(
+			Model model,
+			Principal principal) {
+		User user = userService.findUserById(Integer.valueOf(principal.getName()));
+		model.addAttribute("userProfile", user);
+		
 		return "user/upload-image";
 	}
 	@PostMapping("/profile/image/upload")
@@ -47,5 +57,6 @@ public class UserController {
 		
 		return "redirect:/unconfirmed/profile";
 	}
-	
+		
+
 }

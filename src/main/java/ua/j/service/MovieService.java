@@ -16,6 +16,8 @@ public interface MovieService {
 	
 	Movie findMovieById(int id);
 	
+	void updateMovie(Movie movie);
+	
 	void deleteMovieById (int id);
 	
 	List<Movie> FindAllMoviesByFilter(SimpleFilter filter);

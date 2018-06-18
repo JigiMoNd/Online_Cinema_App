@@ -45,7 +45,10 @@ public class UnconfirmedController {
 	}
 	
 	@PostMapping("/edit-profile")
-	public ModelAndView saveEditedUser(@ModelAttribute("editModel") EditRequest editRequest) {
+	public ModelAndView saveEditedUser(
+			@ModelAttribute("editModel") 
+			EditRequest editRequest
+			) {
 		try {
 			userService.updateUser(UserMapper.editRequestToUser(editRequest));
 		} catch (Exception e) {
