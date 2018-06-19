@@ -54,9 +54,38 @@
 			</p>
 		</div>
 	</div>
-	<div class="player content">
-		<iframe src="http://hdgo.cc/video/t/8way17pqa9p3vxb445prabqh/${movieModel.playerUrl}/" width="610" height="370" border="0" frameborder="0" allowfullscreen></iframe>
-	</div>
+	<sec:authorize access="hasAnyRole('USER', 'ADMIN', 'MODERATOR')">
+		<c:choose>
+			<c:when test="${ userProfile.age ge movieModel.ageLimit.value}">
+				<div class="player content">
+					<iframe src="http://hdgo.cc/video/t/8way17pqa9p3vxb445prabqh/${movieModel.playerUrl}/" width="610" height="370" border="0" frameborder="0" allowfullscreen></iframe>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div style="text-align:center;">
+					<h4>
+					We are sorry, but this movie is not recommended for viewing by your age.
+					</h4>
+				</div>
+			</c:otherwise>
+		</c:choose>
+	</sec:authorize>
+	<sec:authorize access="!isAuthenticated()">
+		<div style="text-align:center;">
+			<h4>
+			We are sorry, but only users with confirmed registration can watch online video<br>
+			You can register right <a href="/registration">here</a>.
+			</h4>
+		</div>
+	</sec:authorize>
+	<sec:authorize  access="hasRole('UNCONFIRMED')">
+		<div style="text-align:center;">
+			<h4>
+			One step left to enjoy watching.<br>
+			Please confirm your e-mail address.
+			</h4>
+		</div>
+	</sec:authorize>
 </div>
 
 

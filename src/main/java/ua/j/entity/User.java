@@ -64,10 +64,7 @@ public class User extends BaseEntity{
 
 	@Column(name = "image_url", length = 500)
 	private String imageUrl;
-	
-	@OneToMany(mappedBy = "user")
-	private List<Comment> comment = new ArrayList<>();
-	
+		
 	private String token;
 	
 	 

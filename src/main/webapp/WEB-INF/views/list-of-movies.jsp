@@ -12,14 +12,14 @@
 </style>
 	
 	<c:url var="firstUrl" value="/list-of-movies?page=0"/>
-	<c:url var="lastUrl" value="/list-of-movies?page=${ movies.totalPages }"/>
+	<c:url var="lastUrl" value="/list-of-movies?page=${ movies.totalPages - 1 }"/>
 	
 	<c:url var="nextUrl" value="/list-of-movies?page=${ currentIndex + 1 }"/>
 	<c:url var="prevUrl" value="/list-of-movies?page=${ currentIndex - 1 }"/>
 	
 	 
-	<div class="container">
-		<div class="row">
+	<div>
+		<div>
 			<ul class="pagination">
 				<c:choose>
 					<c:when test="${ currentIndex == 0 }">
@@ -31,6 +31,9 @@
 					<c:otherwise>
 						<li><a href="${ firstUrl }">&lt;&lt;</a></li>
 						<li><a href="${ prevUrl }">&lt;</a></li>
+						<c:if test="${currentIndex le 4}">
+							<li> <a href="${ firstUrl }">1</a></li>
+						</c:if>
 					</c:otherwise>
 				</c:choose>
 				
@@ -48,6 +51,49 @@
 					</c:choose>
 				</c:forEach>
 				
+					<c:forEach var="i" begin="${ 0 }" end="${ 4 }">
+						<c:if test="${ movies.totalPages - 1 == i }">
+							<c:choose>
+								<c:when test="${ currentIndex != 0 }">
+									<c:forEach var="e" begin="${ currentIndex }" end="${ i - 1 }">
+										<c:url var="pageUr" value="/list-of-movies?page=${ e + 1 }" />
+
+										<li><a href="${ pageUr }">${ e + 2 }</a></li>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<c:if test="${movies.totalPages > 1 }">
+										<c:forEach var="e" begin="${ currentIndex }" end="${ i - 1 }">
+											<c:url var="pageUr" value="/list-of-movies?page=${ e + 1 }" />
+	
+											<li><a href="${ pageUr }">${ e + 2 }</a></li>
+										</c:forEach>
+									</c:if>
+								</c:otherwise>
+							</c:choose>
+						</c:if>
+					</c:forEach>
+					<c:if test="${ movies.totalPages - 1 > 4 }">
+						<c:set var="i" value="4" />
+						<c:if test="${ currentIndex le i }">
+							<c:choose>
+								<c:when test="${ currentIndex != 0 }">
+									<c:forEach var="e" begin="${ currentIndex }" end="${ i - 1 }">
+										<c:url var="pageUr" value="/list-of-movies?page=${ e + 1 }" />
+										<li><a href="${ pageUr }">${ e + 2 }</a></li>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="e" begin="${ currentIndex }" end="${ i - 1 }">
+										<c:url var="pageUr" value="/list-of-movies?page=${ e + 1 }" />
+	
+										<li><a href="${ pageUr }">${ e + 2 }</a></li>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
+						</c:if>
+					</c:if>
+					
 				<c:choose>
 					<c:when test="${ currentIndex+1 == movies.totalPages }">
 						<li class="disabled"><a href="#">&gt;</a></li>
@@ -62,6 +108,7 @@
 			</ul>
 		</div>
 	</div>
+	
 <div class="containe">
 <c:forEach items="${ moviesByPageSize }" var="movie">
 

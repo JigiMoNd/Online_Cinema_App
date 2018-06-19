@@ -9,9 +9,7 @@
 .flex-column {
 	display: flex;
 	flex-direction: column;
-} /*
-    justify-content:space-around; 
-    align-items: center; */
+} 
 </style>
 
 <nav class="navbar  navbar-inverse">

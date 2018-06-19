@@ -124,8 +124,8 @@ public class HomeController {
 		Page<Movie> page = movieService.FindMovieByPage(pageable);
 
 		int currentPage = page.getNumber();
-		int begin = Math.max(1, currentPage - 5);
-		int end = Math.min(begin + 5, page.getNumber());
+		int begin = Math.max(1, currentPage - 4);
+		int end = Math.min(begin + 4, page.getNumber());
 
 		model.addAttribute("beginIndex", begin);
 		model.addAttribute("endIndex", end);
@@ -143,30 +143,13 @@ public class HomeController {
 
 		return "list-of-movies";
 	}
-
-	@GetMapping("/list-of-movies/search")
-	public String showMoviesByFilter(Model model, @RequestParam(value = "search", required = false) String search,
+	
+	@GetMapping("/search")
+	public String showSearchResults	(
+			Model model, 
+			@PageableDefault Pageable pageable, 
 			Principal principal) {
-
-		SimpleFilter filter = null;
-		if (search != null) {
-			filter = new SimpleFilter(search);
-		}
-		model.addAttribute("moviesByPageSize", movieService.FindAllMoviesByFilter(filter));
-
-		try {
-			User user = userService.findUserById(Integer.valueOf(principal.getName()));
-			model.addAttribute("userProfile", user);
-		} catch (NullPointerException e) {
-			return "list-of-movies"; // додано до всіх методів jsp-шок щоб відображалась аватарка
-		}
-		return "list-of-movies";
-	}
-
-	@GetMapping("/list-of-actors")
-	public String showActors(Model model, @PageableDefault Pageable pageable, Principal principal) {
-
-		Page<Actor> page = actorService.FindActorsByPage(pageable);
+		Page<Movie> page = movieService.FindMovieByPage(pageable);
 
 		int currentPage = page.getNumber();
 		int begin = Math.max(1, currentPage - 5);
@@ -176,6 +159,57 @@ public class HomeController {
 		model.addAttribute("endIndex", end);
 		model.addAttribute("currentIndex", currentPage);
 
+		model.addAttribute("movies", page);
+		model.addAttribute("moviesByPageSize", page.getContent());// movieService.findAllMovies());
+
+		try {
+			User user = userService.findUserById(Integer.valueOf(principal.getName()));
+			model.addAttribute("userProfile", user);
+		} catch (NullPointerException e) {
+			return "search";
+		}
+
+		return "search";
+	}
+
+	@GetMapping("/list-of-movies/search")
+	public String showMoviesByFilter(
+			Model model, 
+			@RequestParam(value = "search", required = false) 
+			String search,
+			Principal principal
+			) {
+
+		SimpleFilter filter = null;
+		if (search != null) {
+			filter = new SimpleFilter(search);
+		}
+		model.addAttribute("moviesByPageSize", movieService.FindAllMoviesByFilter(filter));
+		model.addAttribute("actorListByPageSize", actorService.FindAllActorsByFilter(filter));
+		
+			try {
+				User user = userService.findUserById(Integer.valueOf(principal.getName()));
+				model.addAttribute("userProfile", user);
+			} catch (NullPointerException e) {
+				return "search"; // додано до всіх методів jsp-шок щоб відображалась аватарка
+			}
+		return "search";
+	}
+
+	@GetMapping("/list-of-actors")
+	public String showActors(Model model, @PageableDefault Pageable pageable, Principal principal) {
+
+		Page<Actor> page = actorService.FindActorsByPage(pageable);
+
+		int currentPage = page.getNumber();
+		int begin = Math.max(1, currentPage - 4);
+		int end = Math.min(begin + 4, page.getNumber());
+
+		model.addAttribute("beginIndex", begin);
+		model.addAttribute("endIndex", end);
+		model.addAttribute("currentIndex", currentPage);
+
+		model.addAttribute("actorsList", page);
 		model.addAttribute("actorListByPageSize", page.getContent());
 
 		try {

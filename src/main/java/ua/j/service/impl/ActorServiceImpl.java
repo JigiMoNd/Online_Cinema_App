@@ -2,12 +2,17 @@ package ua.j.service.impl;
 
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import ua.j.domain.SimpleFilter;
@@ -42,8 +47,25 @@ public class ActorServiceImpl implements ActorService {
 	}
 
 	@Override
-	public List<Actor> FindAllActorsByFilter(SimpleFilter filter) {
-		return null;
+	public List<Actor> FindAllActorsByFilter(SimpleFilter filter) {		
+		System.out.println("\n\n" 
+			+ getSpecification(filter) + "\n" 
+			+ actorRepository.findAll(getSpecification(filter)) + "\n\n");
+				return actorRepository.findAll(getSpecification(filter));
+			}
+
+			private Specification<Actor> getSpecification(SimpleFilter filter) {
+				return new Specification<Actor>() {
+					private static final long serialVersionUID = 1L;
+					
+					@Override
+					public Predicate toPredicate(Root<Actor> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+						if (filter.getSearch().isEmpty()) return null;
+						
+						return cb.like(root.get("fullName"), "%" + filter.getSearch() + "%");
+					}
+				};
+//	return null;		
 	}
 
 	@Override

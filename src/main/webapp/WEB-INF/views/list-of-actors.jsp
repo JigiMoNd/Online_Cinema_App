@@ -1,14 +1,13 @@
 <%@ include file="/WEB-INF/taglib.jsp" %>
 
 	<c:url var="firstUrl" value="/list-of-actors?page=0"/>
-	<c:url var="lastUrl" value="/list-of-actors?page=${ actors.totalPages }"/>
+	<c:url var="lastUrl" value="/list-of-actors?page=${ actorsList.totalPages - 1}"/>
 	
 	<c:url var="nextUrl" value="/list-of-actors?page=${ currentIndex + 1 }"/>
 	<c:url var="prevUrl" value="/list-of-actors?page=${ currentIndex - 1 }"/>
 	
-	 
-	<div class="container">
-		<div class="row">
+	<div>
+		<div>
 			<ul class="pagination">
 				<c:choose>
 					<c:when test="${ currentIndex == 0 }">
@@ -20,6 +19,9 @@
 					<c:otherwise>
 						<li><a href="${ firstUrl }">&lt;&lt;</a></li>
 						<li><a href="${ prevUrl }">&lt;</a></li>
+						<c:if test="${currentIndex le 4}">
+							<li> <a href="${ firstUrl }">1</a></li>
+						</c:if>
 					</c:otherwise>
 				</c:choose>
 				
@@ -36,9 +38,50 @@
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
-				
+					<c:forEach var="i" begin="${ 0 }" end="${ 4 }">
+						<c:if test="${ actorsList.totalPages - 1 == i }">
+							<c:choose>
+								<c:when test="${ currentIndex != 0 }">
+									<c:forEach var="e" begin="${ currentIndex }" end="${ i - 1 }">
+										<c:url var="pageUr" value="/list-of-actors?page=${ e + 1 }" />
+
+										<li><a href="${ pageUr }">${ e + 2 }</a></li>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+										<c:if test="${ actorsList.totalPages > 1 }">
+											<c:forEach var="e" begin="${ currentIndex }" end="${ i - 1 }">
+												<c:url var="pageUr" value="/list-of-actors?page=${ e + 1 }" />
+												<li><a href="${ pageUr }">${ e + 2 }</a></li>
+											</c:forEach>
+										</c:if>
+								</c:otherwise>
+							</c:choose>
+						</c:if>
+					</c:forEach>
+					<c:if test="${ actorsList.totalPages - 1 > 4 }">
+						<c:set var="i" value="4" />
+						<c:if test="${ currentIndex le i }">
+							<c:choose>
+								<c:when test="${ currentIndex != 0 }">
+									<c:forEach var="e" begin="${ currentIndex }" end="${ i - 1 }">
+										<c:url var="pageUr" value="/list-of-actors?page=${ e + 1 }" />
+										<li><a href="${ pageUr }">${ e + 2 }</a></li>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="e" begin="${ currentIndex }" end="${ i - 1 }">
+										<c:url var="pageUr" value="/list-of-actors?page=${ e + 1 }" />
+	
+										<li><a href="${ pageUr }">${ e + 2 }</a></li>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
+						</c:if>
+					</c:if>
+					
 				<c:choose>
-					<c:when test="${ currentIndex+1 == movies.totalPages }">
+					<c:when test="${ currentIndex + 1 == actorsList.totalPages }">
 						<li class="disabled"><a href="#">&gt;</a></li>
 						<li class="disabled"><a href="#">&gt;&gt;</a></li>
 					</c:when>
@@ -46,12 +89,13 @@
 					<c:otherwise>
 						<li><a href="${ nextUrl }">&gt;</a></li>
 						<li><a href="${ lastUrl }">&gt;&gt;</a></li>
-					</c:otherwise>
+					</c:otherwise> 
 				</c:choose>
 			</ul>
 		</div>
-		<div class="container">
-			<div class="row">
+		
+		<div>
+			<div>
 				<div class="col-md-12">
 					<table class="table table-hover table-striped">
 						<thead>
@@ -93,7 +137,7 @@
 												</sec:authorize>
 											</div>
 										</td>
-									</sec:authorize> 
+									</sec:authorize>
 								</tr>
 							</c:forEach>
 						</tbody>

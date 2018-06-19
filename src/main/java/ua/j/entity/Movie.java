@@ -60,10 +60,7 @@ public class Movie extends BaseEntity {
 	
 	@ManyToMany(mappedBy = "movie")
 	private List<Country> country = new ArrayList<Country>();
-	
-	@OneToMany(mappedBy = "movie")
-	private List<Comment> comment = new ArrayList<>();
-	
+		
 	@ManyToMany(mappedBy = "movie")
 	private List<Actor> actor = new ArrayList<>();
 		
