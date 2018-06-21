@@ -49,24 +49,21 @@ public class MovieServiceImpl implements MovieService {
 
 	@Override
 	public List<Movie> FindAllMoviesByFilter(SimpleFilter filter) {
-		System.out.println("\n\n" 
-	+ getSpecification(filter) + "\n" 
-	+ movieRepository.findAll(getSpecification(filter)) + "\n\n");
 		return movieRepository.findAll(getSpecification(filter));
-	}
-
-	private Specification<Movie> getSpecification(SimpleFilter filter) {
-		return new Specification<Movie>() {
-			private static final long serialVersionUID = 1L;
-			
-			@Override
-			public Predicate toPredicate(Root<Movie> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-				if (filter.getSearch().isEmpty()) return null;
+		}
+	
+		private Specification<Movie> getSpecification(SimpleFilter filter) {
+			return new Specification<Movie>() {
+				private static final long serialVersionUID = 1L;
 				
-				return cb.like(root.get("name"), "%" + filter.getSearch() + "%");
-			}
-		};
-	}
+				@Override
+				public Predicate toPredicate(Root<Movie> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+					if (filter.getSearch().isEmpty()) return null;
+					
+					return cb.like(root.get("name"), "%" + filter.getSearch() + "%");
+				}
+			};
+		}
 
 	@Override
 	public Page<Movie> FindMovieByPage(Pageable pageable) {

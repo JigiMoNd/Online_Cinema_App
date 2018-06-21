@@ -18,7 +18,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ua.j.entity.enums.AgeLimit;
-import ua.j.entity.enums.Status;
 
 @Entity
 @Table(name = "movie")
@@ -33,7 +32,29 @@ public class Movie extends BaseEntity {
 	private int length;
 	
 	private int rating;
+	
+	public Movie(int rating) {
 		
+		int sum = 0;
+		int e = 0;
+		int total = 0;
+		    for (Raiting r : raiting) {
+		    	if(r.getMovie().getId().equals(super.getId())) {
+		    		e = r.getRaiting();
+		    		total++;
+		    	} else {
+		    		e = 0;
+		    	}
+		      sum += e;
+		      
+		    }
+		this.rating = sum/total;
+		}
+	
+	
+	@OneToMany(mappedBy = "movie")
+	private List<Raiting> raiting = new ArrayList<>();
+
 	@Column(length = 500)
 	private String description;
 	
@@ -58,11 +79,13 @@ public class Movie extends BaseEntity {
 	@Column(name = "player_url")
 	private String playerUrl;
 	
-	@ManyToMany(mappedBy = "movie")
+	@ManyToMany
+	@JoinTable(name = "movie_country",
+	joinColumns = @JoinColumn(name = "movie_id"),
+	inverseJoinColumns = @JoinColumn(name = "country_id"))
 	private List<Country> country = new ArrayList<Country>();
 		
 	@ManyToMany(mappedBy = "movie")
 	private List<Actor> actor = new ArrayList<>();
-		
-	private boolean isDeleted;
+	
 }

@@ -25,11 +25,8 @@ public class Country extends BaseEntity {
 		@OneToMany(mappedBy = "country")
 		private List<Actor> actor = new ArrayList<Actor>();
 		
-		@ManyToMany
-		@JoinTable(name = "country_movie",
-				joinColumns = @JoinColumn(name = "country_id"),
-				inverseJoinColumns = @JoinColumn(name = "movie_id"))
-		private List<Movie> movie = new ArrayList<Movie>();
+		@ManyToMany(mappedBy = "country")
+		private List<Movie> movie = new ArrayList<>();
 		
 		
 }

@@ -42,11 +42,9 @@
 		</div>
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1" style="width: 40%">
-			<form action="/list-of-movies/search" method="get"
-				class="navbar-form center">
-				<input type="text" name="search" placeholder="Find movie"
-					class="form-control"> <input type="submit" value="Search"
-					class="form-control">
+			<form action="/list-of-movies/search" method="get" class="navbar-form center">
+				<input type="text" name="search" placeholder="Find movie" value="${i}" class="form-control"> 
+				<input type="submit" value="find movies" class="form-control">
 			</form>
 		</div>
 		<div class="collapse navbar-collapse"

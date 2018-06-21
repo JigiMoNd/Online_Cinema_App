@@ -48,10 +48,7 @@ public class ActorServiceImpl implements ActorService {
 
 	@Override
 	public List<Actor> FindAllActorsByFilter(SimpleFilter filter) {		
-		System.out.println("\n\n" 
-			+ getSpecification(filter) + "\n" 
-			+ actorRepository.findAll(getSpecification(filter)) + "\n\n");
-				return actorRepository.findAll(getSpecification(filter));
+			return actorRepository.findAll(getSpecification(filter));
 			}
 
 			private Specification<Actor> getSpecification(SimpleFilter filter) {
@@ -65,8 +62,8 @@ public class ActorServiceImpl implements ActorService {
 						return cb.like(root.get("fullName"), "%" + filter.getSearch() + "%");
 					}
 				};
-//	return null;		
-	}
+				//	return null;		
+			}
 
 	@Override
 	public Page<Actor> FindActorsByPage(Pageable pageable) {

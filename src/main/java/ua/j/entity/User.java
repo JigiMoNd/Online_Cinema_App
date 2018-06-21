@@ -67,6 +67,9 @@ public class User extends BaseEntity{
 		
 	private String token;
 	
+	@OneToMany(mappedBy = "user")
+	private List<Raiting> raiting = new ArrayList<>();
+	
 	 
 	
 	

@@ -20,7 +20,6 @@ enctype="multipart/form-data">
 	Age limit: <form:radiobuttons path="ageLimit" items="${ageLimit}" itemLabel="limit"/> <br>
 	ImageURL: <br><input type="file" name="poster"/> <br>
 	PlayerURL: <br> <form:input path="playerUrl"/> <br>
-	Rating: <br> <form:input path="rating" type="number"/> <br>
 	
 	<input type="submit" value="Add movie">
 
