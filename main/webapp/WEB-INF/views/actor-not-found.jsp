@@ -1,1 +1,0 @@
-<h1>sorry, but actor with such id do not exist</h1>
